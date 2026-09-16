@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: franka-pi05-mujoco
+Version: 0.1.0
+Summary: MuJoCo Franka workspace with an OpenPI pi0.5-compatible rollout client
+Requires-Python: >=3.9
+Requires-Dist: mujoco>=2.3.7
+Requires-Dist: numpy>=1.24
+Requires-Dist: Pillow>=9
+Provides-Extra: dev
+Requires-Dist: pytest>=7; extra == "dev"

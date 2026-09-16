@@ -1,0 +1,2 @@
+[console_scripts]
+franka-pi05 = franka_pi05.rollout:main
