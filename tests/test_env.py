@@ -32,3 +32,30 @@ def test_zero_velocity_holds_arm_pose():
         for _ in range(10):
             env.step(np.zeros(8))
         np.testing.assert_allclose(env.data.qpos[:7], before, atol=2e-2)
+
+
+def test_panda_model_and_camera_contract():
+    with FrankaMuJoCoEnv(render_images=False) as env:
+        assert env.model.nmesh > 0
+        assert env.model.nu == 9
+        assert env.model.nq == 16
+        assert env.model.camera("wrist").bodyid == env.model.body("hand").id
+        # Panda's hand hangs above the tabletop in the initial pose.
+        tcp = env.data.site("tcp").xpos
+        assert 0.2 < tcp[0] < 0.8
+        assert tcp[2] > 0.5
+
+
+def test_close_legacy_renderer_is_idempotent():
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+
+    with FrankaMuJoCoEnv(render_images=False) as env:
+        gl = Mock()
+        mjr = Mock()
+        env.renderer = SimpleNamespace(_gl_context=gl, _mjr_context=mjr)
+        env.close()
+        env.close()
+        gl.make_current.assert_called_once()
+        mjr.free.assert_called_once()
+        gl.free.assert_called_once()

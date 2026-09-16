@@ -23,6 +23,12 @@ terminal CI tanpa display tetap dapat menjalankan test fisika yang disediakan.
 Untuk smoke test CLI pada terminal tersebut gunakan `--no-render` dan jangan kirim
 hasilnya ke model sebagai evaluasi visual.
 
+Preview resolusi lebih tinggi di macOS:
+
+```bash
+franka-pi05 --mode mock --steps 30 --image-size 640 --save-frames rollouts/panda
+```
+
 ## Menjalankan π0.5
 
 Gunakan konfigurasi/checkpoint DROID pada server OpenPI karena adapter ini mengikuti
@@ -63,7 +69,8 @@ Server mengembalikan action chunk `[horizon, 8]`. Client meminta chunk baru seti
 - `observation/gripper_position`: `float32`, `[1]`, 0 tertutup dan 1 terbuka
 - `prompt`: instruksi bahasa
 
-Model robot di sini merupakan MJCF ringan untuk integrasi dan smoke test. Untuk
-evaluasi dinamika yang lebih mendekati hardware, ganti scene dengan model resmi
-`franka_emika_panda` dari MuJoCo Menagerie sambil mempertahankan nama joint,
-kamera, dan kontrak I/O di `FrankaMuJoCoEnv`.
+Model robot memakai mesh, kinematika, dan inertial Franka Emika Panda dari
+MuJoCo Menagerie (Apache 2.0; sumber dan lisensi ada di `assets/panda`). Scene
+menambahkan meja, kubus, kamera eksternal dan wrist, serta kontrol velocity
+untuk kontrak I/O workspace. Ini tetap environment integrasi/smoke test;
+kontrol dan domain kamera belum dikalibrasi terhadap hardware DROID.

@@ -23,7 +23,7 @@ franka-pi05 = "franka_pi05.rollout:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-franka_pi05 = ["assets/*.xml"]
+franka_pi05 = ["assets/*.xml", "assets/panda/LICENSE", "assets/panda/*.md", "assets/panda/assets/*.obj", "assets/panda/assets/*.stl"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -70,7 +70,16 @@ class FrankaMuJoCoEnv:
 
     def close(self) -> None:
         if self.renderer is not None:
-            self.renderer.close()
+            renderer = self.renderer
+            self.renderer = None
+            if hasattr(renderer, "close"):
+                renderer.close()
+            else:
+                # MuJoCo 2.3.x predates Renderer.close(). Free the render
+                # resources before releasing the native OpenGL context.
+                renderer._gl_context.make_current()
+                renderer._mjr_context.free()
+                renderer._gl_context.free()
 
     def __enter__(self) -> "FrankaMuJoCoEnv":
         return self

@@ -18,11 +18,12 @@ def run_rollout(
     open_loop_horizon: int,
     save_frames: Path | None = None,
     no_render: bool = False,
+    image_size: int = 224,
 ) -> None:
     policy = MockPolicy() if mode == "mock" else make_remote_policy(host, port)
     save_frames and save_frames.mkdir(parents=True, exist_ok=True)
 
-    with FrankaMuJoCoEnv(render_images=not no_render) as env:
+    with FrankaMuJoCoEnv(image_size=image_size, render_images=not no_render) as env:
         obs = env.reset()
         chunk = np.empty((0, 8), dtype=np.float32)
         chunk_index = 0
@@ -53,6 +54,8 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--open-loop-horizon", type=int, default=8)
     parser.add_argument("--save-frames", type=Path)
+    parser.add_argument("--image-size", type=int, default=224,
+                        help="Square render resolution (default: 224; use 640 for previews)")
     parser.add_argument(
         "--no-render",
         action="store_true",
