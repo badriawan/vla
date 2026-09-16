@@ -29,6 +29,21 @@ Preview resolusi lebih tinggi di macOS:
 franka-pi05 --mode mock --steps 30 --image-size 640 --save-frames rollouts/panda
 ```
 
+## Teleop keyboard (macOS)
+
+```bash
+source .venv/bin/activate
+python -m franka_pi05.teleop
+```
+
+Klik jendela teleop untuk memberi fokus. Tekan **1–7** untuk memilih joint,
+tahan **panah atas/bawah** untuk menggerakkan joint tersebut. Lepaskan untuk
+menghentikan perintah gerak. **G/H** membuka/menutup gripper, **+/−** mengatur
+kecepatan, **Space** pause/resume, **R** reset pose, **Esc** keluar.
+Scroll untuk zoom. Saat fokus jendela hilang, simulasi otomatis pause;
+tekan Space setelah kembali. Ini kontrol joint di simulasi, bukan kontrol TCP
+Cartesian atau koneksi ke robot fisik.
+
 ## Menjalankan π0.5
 
 Gunakan konfigurasi/checkpoint DROID pada server OpenPI karena adapter ini mengikuti

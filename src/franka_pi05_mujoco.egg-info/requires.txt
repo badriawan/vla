@@ -1,5 +1,5 @@
 mujoco>=2.3.7
-numpy>=1.24
+numpy<2,>=1.24
 Pillow>=9
 
 [dev]
